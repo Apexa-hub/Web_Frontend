@@ -1,0 +1,50 @@
+/* Create.css */
+
+/* Background styling */
+.upload-image-page {
+  background-image: url('../assets/SignInImage.jpg');
+  background-size: cover;
+  background-position: center;
+  /* filter: brightness(0.7);  */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* Upload box styling */
+/* .upload-form {
+  background: #fff;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  text-align: center;
+  color: black;
+} */
+
+.upload-form h3 {
+  margin-bottom: 20px;
+}
+
+.message-overlay{
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.logout-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #555;
+}
