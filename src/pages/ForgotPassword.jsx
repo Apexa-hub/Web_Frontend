@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ForgotPassword() {
   const [values, setValue] = useState({
@@ -20,7 +22,8 @@ function ForgotPassword() {
       .post("http://localhost:8081/forgotpassword", values)
       .then((res) => {
         if (res.data.Status === "Success") {
-          alert("Email sent! Please check your inbox.");
+          // alert("Email sent! Please check your inbox.");
+          toast.success("Email sent! Please check your inbox")
           navigate("/signin");
         } else {
           alert(res.data.Error);

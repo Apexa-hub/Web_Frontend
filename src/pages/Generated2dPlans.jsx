@@ -15,10 +15,9 @@ const ViewImages = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8081/get-all-images", { withCredentials: true })
+      .get("http://localhost:8081/get-room-split-images", { withCredentials: true })
       .then((response) => {
         console.log(response);
-
         setImages(response.data.images);
         setLoading(false);
       })
@@ -44,22 +43,20 @@ const ViewImages = () => {
       <Header />
       <div className="view-images-container">
         <ToastContainer />
-        <h2>Generated Floor Plans</h2>
+        <h2>Generated Floor Plan</h2>
 
         {loading ? (
           <p>Loading images...</p>
         ) : (
           <div className="image-grid">
             {images.length > 0 ? (
-              images.map((image) => (
-                <div key={image.id} className="image-card">
-                  <img
-                    src={`data:image/png;base64,${image.image_data}`}
-                    alt={`Image ${image.id}`}
-                    className="image-thumbnail"
-                  />
-                </div>
-              ))
+              <div className="image-card">
+                <img
+                  src={`data:image/png;base64,${images[0].image_data}`}
+                  alt={`Image 1`}
+                  className="image-thumbnail"
+                />
+              </div>
             ) : (
               <p>No images found.</p>
             )}

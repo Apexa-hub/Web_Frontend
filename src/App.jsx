@@ -12,6 +12,8 @@ import ResetPassword from "./pages/ResetPassword";
 import UserInputs from "./pages/UserInputs";
 import Generated2dPlans from "./pages/Generated2dPlans";
 import Generated3dPlans from "./pages/Generated3dPlans";
+import History from "./pages/History";
+import Download from "./pages/Download";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/about" element={<About />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/download" element={<Download />} />
         <Route path="/adminpage" element={<AdminPage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/uploadImagePage" element={<UploadImagePage />} />

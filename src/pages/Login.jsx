@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const [values, setValue] = useState({
@@ -32,7 +34,8 @@ function Login() {
           //     navigate("/uploadImagePage");
           //   }
         } else {
-          alert(res.data.Error);
+          toast.error(res.data.Error);
+          // alert(res.data.Error);
         }
       })
       .catch((err) => {
@@ -43,6 +46,7 @@ function Login() {
   return (
     <div className="login-container">
       <Header />
+      <ToastContainer />
       <form onSubmit={handleSubmit} className="login-form">
         <h2>Welcome!</h2>
 

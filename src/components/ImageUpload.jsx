@@ -14,6 +14,7 @@ import Footer from "./Footer";
 import { useNavigate } from "react-router-dom";
 
 const ImageUpload = () => {
+  const [inputBase64Image, setInputBase64Image] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const [points, setPoints] = useState([]);
@@ -48,6 +49,13 @@ const ImageUpload = () => {
   const handleChange = (e) => {
     const file = e.target.files[0];
     handleFileChange(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setInputBase64Image(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleDrop = (e) => {
@@ -140,13 +148,24 @@ const ImageUpload = () => {
 
   const uploadImageToBackend = async (base64Image) => {
     try {
+      const inputImageformattedBase64 = inputBase64Image.replace(
+        /^data:image\/\w+;base64,/,
+        ""
+      ); // Remove data URI prefix
       const formattedBase64 = base64Image.replace(
         /^data:image\/\w+;base64,/,
         ""
       ); // Remove data URI prefix
+
+      // console.log(inputImageformattedBase64);
+      // console.log(formattedBase64);
+
       const response = await axios.post(
         "http://localhost:8081/upload-image",
-        { imageData: formattedBase64 },
+        {
+          imageData: formattedBase64,
+          inputImage: inputImageformattedBase64,
+        },
         {
           withCredentials: true,
           headers: { "Content-Type": "application/json" },
@@ -160,15 +179,18 @@ const ImageUpload = () => {
 
       console.log("Image uploaded:", response.data);
     } catch (error) {
-      toast.error("Error uploading image");
-
-      console.error("Error uploading image:", error);
+      if (error.response && error.response.data && error.response.data.error) {
+        toast.error(error.response.data.error);
+      } else {
+        toast.error("Error uploading image");
+      }
     }
   };
 
   return (
     <div className="create">
       <Header />
+      <ToastContainer />
       <div className="upload-container">
         <label
           className={`upload-label ${dragActive ? "drag-active" : ""}`}

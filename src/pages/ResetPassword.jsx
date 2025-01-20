@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/ResetPassword.css"; //styling
 import Header from "../components/Header";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ResetPassword() {
   const { token } = useParams();
@@ -16,19 +18,28 @@ function ResetPassword() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     if (values.password !== values.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
     axios
-      .post(`http://localhost:8081/resetpassword/${token}`, {
-        password: values.password,
-      })
+      .post(
+        "http://localhost:8081/resetpassword",
+        { password: values.password },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        }
+      )
       .then((res) => {
         if (res.data.Status === "Success") {
-          alert("Password reset successfully!");
-          navigate("/signin");
+          toast.success("Password reset successfully!");
+          setTimeout(() => {
+            navigate("/signin");
+          }, 2000);
         } else {
           alert(res.data.Error);
         }
